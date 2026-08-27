@@ -1,19 +1,23 @@
-```html
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description" content="Pixora PDF - Converta várias imagens em PDF gratuitamente.">
+<meta name="description" content="Pixora PDF - Converta imagens em PDF gratuitamente.">
 <meta name="theme-color" content="#4f46e5">
 
 <title>Pixora PDF - Imagem para PDF</title>
 
-<!-- GOOGLE ADSENSE -->
+<!-- Google AdSense -->
+
 <script async
 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6858529705565321"
 crossorigin="anonymous"></script>
+
+<!-- jsPDF local -->
+
+<script src="js/jspdf.umd.min.js"></script>
 
 <style>
 :root{
@@ -50,6 +54,11 @@ font:inherit;
 
 button{
 cursor:pointer;
+}
+
+button:disabled{
+cursor:not-allowed;
+opacity:.55;
 }
 
 .container{
@@ -211,12 +220,6 @@ transition:.15s;
 transform:translateY(-1px);
 }
 
-.primary-btn:disabled{
-opacity:.5;
-cursor:not-allowed;
-transform:none;
-}
-
 .secondary-btn{
 min-height:44px;
 padding:0 16px;
@@ -326,11 +329,6 @@ font-weight:750;
 
 .mini-btn:hover{
 background:#e2e8f0;
-}
-
-.mini-btn:disabled{
-opacity:.4;
-cursor:not-allowed;
 }
 
 .mini-btn.danger{
@@ -454,6 +452,7 @@ flex-wrap:wrap;
 .status{
 flex-basis:100%;
 }
+
 }
 
 @media(max-width:430px){
@@ -469,8 +468,10 @@ font-size:2.5rem;
 .actions{
 flex-direction:column;
 }
+
 }
 </style>
+
 </head>
 
 <body>
@@ -506,8 +507,7 @@ Transforme suas imagens em PDF
 </h1>
 
 <p id="subtitle">
-Selecione quantas imagens quiser, organize a ordem e baixe um único PDF.
-Tudo acontece diretamente no seu navegador.
+Selecione quantas imagens quiser, organize a ordem e baixe um único PDF. Tudo acontece diretamente no seu navegador.
 </p>
 
 </section>
@@ -520,6 +520,7 @@ class="hidden"
 type="file"
 accept="image/*"
 multiple
+
 >
 
 <div
@@ -544,12 +545,11 @@ JPG, PNG, WEBP e outros formatos comuns de imagem
 class="primary-btn"
 id="selectBtn"
 type="button"
+
 >
-＋
-<span id="selectText">
-Selecionar imagens
-</span>
-</button>
+
+＋ <span id="selectText">
+Selecionar imagens </span> </button>
 
 </div>
 
@@ -569,9 +569,10 @@ id="count"
 class="secondary-btn"
 id="addMore"
 type="button"
+
 >
-＋ Adicionar mais
-</button>
+
+＋ Adicionar mais </button>
 
 </div>
 
@@ -606,20 +607,20 @@ id="status"
 class="secondary-btn"
 id="clearBtn"
 type="button"
+
 >
-Limpar tudo
-</button>
+
+Limpar tudo </button>
 
 <button
 class="primary-btn"
 id="convertBtn"
 type="button"
+
 >
-↓
-<span id="convertText">
-Criar e baixar PDF
-</span>
-</button>
+
+↓ <span id="convertText">
+Criar e baixar PDF </span> </button>
 
 </div>
 
@@ -628,24 +629,33 @@ Criar e baixar PDF
 <section class="tips">
 
 <div class="tip">
+
 <strong>🔒 Privado</strong>
+
 <span id="privateText">
 Suas imagens são processadas localmente no seu navegador.
 </span>
+
 </div>
 
 <div class="tip">
+
 <strong>📚 Várias imagens</strong>
+
 <span id="multiText">
 Escolha várias imagens e combine todas em um único PDF.
 </span>
+
 </div>
 
 <div class="tip">
+
 <strong>🌎 Global</strong>
+
 <span id="globalText">
 A interface acompanha automaticamente o idioma do navegador.
 </span>
+
 </div>
 
 </section>
@@ -658,10 +668,8 @@ A interface acompanha automaticamente o idioma do navegador.
 
 © <span id="year"></span>
 Pixora PDF
-·
-<span id="footerText">
-Conversão de imagens diretamente no navegador.
-</span>
+· <span id="footerText">
+Conversão de imagens diretamente no navegador. </span>
 
 </footer>
 
@@ -698,6 +706,7 @@ ready:"Pronto para criar seu PDF.",
 creating:"Criando PDF...",
 done:"PDF criado com sucesso.",
 noImages:"Selecione pelo menos uma imagem primeiro.",
+libraryError:"A biblioteca de PDF não foi carregada. Atualize a página e tente novamente.",
 invalid:"Alguns arquivos não eram imagens e foram ignorados.",
 error:"Ocorreu um erro ao criar o PDF."
 },
@@ -725,6 +734,7 @@ ready:"Ready to create your PDF.",
 creating:"Creating PDF...",
 done:"PDF created successfully.",
 noImages:"Select at least one image first.",
+libraryError:"The PDF library could not be loaded. Refresh the page and try again.",
 invalid:"Some files were not images and were ignored.",
 error:"Something went wrong while creating the PDF."
 },
@@ -751,9 +761,10 @@ down:"Bajar",
 ready:"Listo para crear tu PDF.",
 creating:"Creando PDF...",
 done:"PDF creado correctamente.",
-noImages:"Selecciona al menos una imagen.",
+noImages:"Selecciona al menos una imagen primero.",
+libraryError:"No se pudo cargar la biblioteca PDF. Actualiza la página.",
 invalid:"Algunos archivos no eran imágenes.",
-error:"Ocurrió un error."
+error:"Ocurrió un error al crear el PDF."
 },
 
 fr:{
@@ -779,6 +790,7 @@ ready:"Prêt à créer votre PDF.",
 creating:"Création du PDF...",
 done:"PDF créé avec succès.",
 noImages:"Sélectionnez au moins une image.",
+libraryError:"La bibliothèque PDF n’a pas pu être chargée.",
 invalid:"Certains fichiers n’étaient pas des images.",
 error:"Une erreur s’est produite."
 },
@@ -806,6 +818,7 @@ ready:"Bereit.",
 creating:"PDF wird erstellt...",
 done:"PDF erfolgreich erstellt.",
 noImages:"Wählen Sie zuerst mindestens ein Bild aus.",
+libraryError:"Die PDF-Bibliothek konnte nicht geladen werden.",
 invalid:"Einige Dateien waren keine Bilder.",
 error:"Beim Erstellen des PDFs ist ein Fehler aufgetreten."
 },
@@ -833,6 +846,7 @@ ready:"Pronto.",
 creating:"Creazione del PDF...",
 done:"PDF creato con successo.",
 noImages:"Seleziona almeno un’immagine.",
+libraryError:"Impossibile caricare la libreria PDF.",
 invalid:"Alcuni file non erano immagini.",
 error:"Si è verificato un errore."
 }
@@ -847,11 +861,11 @@ translations[browserLanguage]
 ? browserLanguage
 : "en";
 
-const t =
-translations[currentLanguage];
+const t = translations[currentLanguage];
 
 document.documentElement.lang =
 currentLanguage;
+
 
 /* =========================================================
    TEXTOS
@@ -873,6 +887,7 @@ document.getElementById("globalText").textContent=t.globalText;
 document.getElementById("footerText").textContent=t.footer;
 document.getElementById("year").textContent=new Date().getFullYear();
 
+
 /* =========================================================
    ELEMENTOS
 ========================================================= */
@@ -893,8 +908,9 @@ const progress=document.getElementById("progress");
 
 let images=[];
 
+
 /* =========================================================
-   ADICIONAR IMAGENS
+   ADICIONAR ARQUIVOS
 ========================================================= */
 
 function addFiles(fileList){
@@ -903,11 +919,11 @@ const files=Array.from(fileList || []);
 
 let ignored=false;
 
-files.forEach(file=>{
+for(const file of files){
 
 if(!file.type || !file.type.startsWith("image/")){
 ignored=true;
-return;
+continue;
 }
 
 images.push({
@@ -916,7 +932,7 @@ file:file,
 url:URL.createObjectURL(file)
 });
 
-});
+}
 
 render();
 
@@ -927,6 +943,7 @@ status.textContent=t.ready;
 }
 
 }
+
 
 /* =========================================================
    RENDER
@@ -1002,10 +1019,10 @@ const hasImages=images.length>0;
 toolbar.classList.toggle("visible",hasImages);
 bottom.classList.toggle("visible",hasImages);
 
-count.textContent=
-images.length+" "+t.selected;
+count.textContent=images.length+" "+t.selected;
 
 }
+
 
 /* =========================================================
    MOVER
@@ -1028,6 +1045,7 @@ render();
 
 }
 
+
 /* =========================================================
    REMOVER
 ========================================================= */
@@ -1045,9 +1063,12 @@ images.splice(index,1);
 render();
 
 status.textContent=
-images.length?t.ready:"";
+images.length
+? t.ready
+: "";
 
 }
+
 
 /* =========================================================
    LIMPAR
@@ -1070,6 +1091,7 @@ progress.style.width="0%";
 
 }
 
+
 /* =========================================================
    BOTÕES
 ========================================================= */
@@ -1091,6 +1113,7 @@ fileInput.value="";
 });
 
 clearBtn.onclick=clearAll;
+
 
 /* =========================================================
    DRAG AND DROP
@@ -1140,6 +1163,7 @@ fileInput.click();
 
 });
 
+
 /* =========================================================
    CARREGAR IMAGEM
 ========================================================= */
@@ -1164,7 +1188,7 @@ img.onerror=()=>{
 
 URL.revokeObjectURL(url);
 
-reject(new Error("Erro ao carregar imagem"));
+reject(new Error("Não foi possível carregar a imagem."));
 
 };
 
@@ -1174,14 +1198,19 @@ img.src=url;
 
 }
 
+
 /* =========================================================
-   CONVERTER IMAGEM PARA JPEG
+   PREPARAR IMAGEM
 ========================================================= */
 
-function imageToJPEG(img,maxSize=1800){
+function prepareImage(img,maxSize=2200){
 
 let width=img.naturalWidth;
 let height=img.naturalHeight;
+
+if(!width || !height){
+throw new Error("Dimensões inválidas da imagem.");
+}
 
 if(width>maxSize || height>maxSize){
 
@@ -1190,8 +1219,8 @@ maxSize/width,
 maxSize/height
 );
 
-width=Math.round(width*scale);
-height=Math.round(height*scale);
+width=Math.max(1,Math.round(width*scale));
+height=Math.max(1,Math.round(height*scale));
 
 }
 
@@ -1200,16 +1229,16 @@ const canvas=document.createElement("canvas");
 canvas.width=width;
 canvas.height=height;
 
-const ctx=canvas.getContext("2d");
+const ctx=canvas.getContext("2d",{
+alpha:false
+});
+
+if(!ctx){
+throw new Error("Canvas não suportado.");
+}
 
 ctx.fillStyle="#ffffff";
-
-ctx.fillRect(
-0,
-0,
-width,
-height
-);
+ctx.fillRect(0,0,width,height);
 
 ctx.imageSmoothingEnabled=true;
 ctx.imageSmoothingQuality="high";
@@ -1222,303 +1251,36 @@ width,
 height
 );
 
-return {
-data:canvas.toDataURL("image/jpeg",0.88),
+const data=canvas.toDataURL(
+"image/jpeg",
+0.90
+);
+
+if(!data || data.length<100){
+throw new Error("Não foi possível preparar a imagem.");
+}
+
+return{
+data:data,
 width:width,
 height:height
 };
 
 }
 
-/* =========================================================
-   BASE64 PARA BYTES
-========================================================= */
-
-function base64ToBytes(base64){
-
-const binary=atob(base64.split(",")[1]);
-
-const bytes=new Uint8Array(binary.length);
-
-for(let i=0;i<binary.length;i++){
-bytes[i]=binary.charCodeAt(i);
-}
-
-return bytes;
-
-}
 
 /* =========================================================
-   BYTE ARRAY
+   ESPERAR
 ========================================================= */
 
-function concatUint8Arrays(arrays){
+function wait(ms){
 
-let total=0;
-
-arrays.forEach(a=>{
-total+=a.length;
+return new Promise(resolve=>{
+setTimeout(resolve,ms);
 });
 
-const result=new Uint8Array(total);
-
-let offset=0;
-
-arrays.forEach(a=>{
-
-result.set(a,offset);
-
-offset+=a.length;
-
-});
-
-return result;
-
 }
 
-/* =========================================================
-   PDF DIRETO NO NAVEGADOR
-========================================================= */
-
-function createPDF(pages){
-
-const encoder=new TextEncoder();
-
-const objects=[];
-
-objects.push(
-"<< /Type /Catalog /Pages 2 0 R >>"
-);
-
-objects.push("");
-
-const pageObjects=[];
-const imageObjects=[];
-
-let objectNumber=3;
-
-pages.forEach(()=>{
-
-pageObjects.push(objectNumber++);
-
-imageObjects.push(objectNumber++);
-
-});
-
-const pagesKids=
-pageObjects.map(n=>n+" 0 R").join(" ");
-
-objects[1]=
-"<< /Type /Pages /Kids ["+
-pagesKids+
-"] /Count "+
-pages.length+
-" >>";
-
-const output=[];
-
-output.push(
-encoder.encode("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n")
-);
-
-const offsets=[0];
-
-function addObject(number,content){
-
-const start=getLength();
-
-offsets[number]=start;
-
-output.push(
-encoder.encode(
-number+
-" 0 obj\n"+
-content+
-"\nendobj\n"
-)
-);
-
-}
-
-function getLength(){
-
-let total=0;
-
-output.forEach(part=>{
-total+=part.length;
-});
-
-return total;
-
-}
-
-pages.forEach((page,index)=>{
-
-const pageNumber=pageObjects[index];
-const imageNumber=imageObjects[index];
-
-const imageBytes=page.bytes;
-
-const width=page.width;
-const height=page.height;
-
-const imageHeader=
-encoder.encode(
-imageNumber+
-" 0 obj\n"+
-"<< /Type /XObject"+
-" /Subtype /Image"+
-" /Width "+width+
-" /Height "+height+
-" /ColorSpace /DeviceRGB"+
-" /BitsPerComponent 8"+
-" /Filter /DCTDecode"+
-" /Length "+imageBytes.length+
-" >>\nstream\n"
-);
-
-const imageFooter=
-encoder.encode(
-"\nendstream\nendobj\n"
-);
-
-const imageStart=getLength();
-
-offsets[imageNumber]=imageStart;
-
-output.push(imageHeader);
-output.push(imageBytes);
-output.push(imageFooter);
-
-const pageWidth=page.pageWidth;
-const pageHeight=page.pageHeight;
-
-const content=
-"q\n"+
-pageWidth+
-" 0 0 "+
-pageHeight+
-" 0 0 cm\n"+
-"/Im1 Do\n"+
-"Q\n";
-
-const contentNumber=objectNumber++;
-
-const contentStart=getLength();
-
-offsets[contentNumber]=contentStart;
-
-output.push(
-encoder.encode(
-contentNumber+
-" 0 obj\n"+
-"<< /Length "+
-encoder.encode(content).length+
-" >>\nstream\n"+
-content+
-"endstream\nendobj\n"
-)
-);
-
-const pageContent=
-"<< /Type /Page"+
-" /Parent 2 0 R"+
-" /MediaBox [0 0 "+
-pageWidth+
-" "+
-pageHeight+
-"]"+
-" /Resources << /XObject << /Im1 "+
-imageNumber+
-" 0 R >> >>"+
-" /Contents "+
-contentNumber+
-" 0 R"+
-" >>";
-
-addObject(
-pageNumber,
-pageContent
-);
-
-});
-
-const xrefPosition=getLength();
-
-const maxObject=offsets.length;
-
-let xref=
-"xref\n"+
-"0 "+
-maxObject+
-"\n"+
-"0000000000 65535 f \n";
-
-for(let i=1;i<maxObject;i++){
-
-const offset=offsets[i] || 0;
-
-xref+=
-String(offset).padStart(10,"0")+
-" 00000 n \n";
-
-}
-
-output.push(
-encoder.encode(xref)
-);
-
-output.push(
-encoder.encode(
-"trailer\n"+
-"<< /Size "+
-maxObject+
-" /Root 1 0 R >>\n"+
-"startxref\n"+
-xrefPosition+
-"\n%%EOF"
-)
-);
-
-return concatUint8Arrays(output);
-
-}
-
-/* =========================================================
-   CONVERTER PARA BLOB
-========================================================= */
-
-function downloadPDF(bytes){
-
-const blob=new Blob(
-[bytes],
-{type:"application/pdf"}
-);
-
-const url=URL.createObjectURL(blob);
-
-const link=document.createElement("a");
-
-const date=new Date()
-.toISOString()
-.slice(0,10);
-
-link.href=url;
-
-link.download=
-"pixora-"+date+".pdf";
-
-document.body.appendChild(link);
-
-link.click();
-
-link.remove();
-
-setTimeout(()=>{
-URL.revokeObjectURL(url);
-},5000);
-
-}
 
 /* =========================================================
    CRIAR PDF
@@ -1534,132 +1296,206 @@ return;
 
 }
 
+
+/* Verifica jsPDF */
+
+if(
+!window.jspdf ||
+typeof window.jspdf.jsPDF!=="function"
+){
+
+status.textContent=t.libraryError;
+
+return;
+
+}
+
+
 convertBtn.disabled=true;
 clearBtn.disabled=true;
 addMore.disabled=true;
 
 progressContainer.classList.add("visible");
-
 progress.style.width="0%";
 
 status.textContent=t.creating;
 
+
 try{
 
-const pages=[];
+const jsPDF=window.jspdf.jsPDF;
+
+/*
+   Sempre usamos A4 portrait.
+   Isso deixa o documento mais compatível
+   entre celulares, computadores e leitores.
+*/
+
+const PAGE_WIDTH=210;
+const PAGE_HEIGHT=297;
+const MARGIN=8;
+
+let pdf=null;
+
+
+/* =========================================
+   PROCESSA CADA IMAGEM
+========================================= */
 
 for(let i=0;i<images.length;i++){
 
-const img=
-await loadImage(
-images[i].file
-);
+const item=images[i];
 
-const converted=
-imageToJPEG(img);
+const img=await loadImage(item.file);
 
-const pageWidth=595;
-const pageHeight=842;
+const prepared=prepareImage(img);
 
-const margin=23;
 
-const availableWidth=
-pageWidth-margin*2;
+/* Cria o documento na primeira imagem */
 
-const availableHeight=
-pageHeight-margin*2;
+if(!pdf){
 
-const ratio=Math.min(
-availableWidth/converted.width,
-availableHeight/converted.height
-);
-
-const finalWidth=
-converted.width*ratio;
-
-const finalHeight=
-converted.height*ratio;
-
-const imageBytes=
-base64ToBytes(converted.data);
-
-pages.push({
-
-bytes:imageBytes,
-
-width:converted.width,
-
-height:converted.height,
-
-pageWidth:finalWidth,
-
-pageHeight:finalHeight
-
+pdf=new jsPDF({
+orientation:"portrait",
+unit:"mm",
+format:"a4",
+compress:true
 });
 
-progress.style.width=
-Math.round(
-((i+1)/images.length)*100
-)+"%";
+}else{
 
-await new Promise(resolve=>{
-setTimeout(resolve,20);
-});
+pdf.addPage("a4","portrait");
 
 }
+
+
+/* Tamanho disponível */
+
+const maxWidth=PAGE_WIDTH-(MARGIN*2);
+const maxHeight=PAGE_HEIGHT-(MARGIN*2);
+
+
+/* Mantém proporção */
+
+const scale=Math.min(
+maxWidth/prepared.width,
+maxHeight/prepared.height
+);
+
+const finalWidth=prepared.width*scale;
+const finalHeight=prepared.height*scale;
+
+
+/* Centraliza */
+
+const x=(PAGE_WIDTH-finalWidth)/2;
+const y=(PAGE_HEIGHT-finalHeight)/2;
+
+
+/* Adiciona imagem */
+
+pdf.addImage(
+prepared.data,
+"JPEG",
+x,
+y,
+finalWidth,
+finalHeight,
+undefined,
+"MEDIUM"
+);
+
+
+/* Atualiza progresso */
+
+const percentage=Math.round(
+((i+1)/images.length)*100
+);
+
+progress.style.width=percentage+"%";
+
+await wait(20);
+
+}
+
+
+/* =========================================
+   SEGURANÇA
+========================================= */
+
+if(!pdf){
+
+throw new Error("PDF não foi criado.");
+
+}
+
+
+/* =========================================
+   GERA BLOB PDF
+========================================= */
+
+const pdfBlob=pdf.output("blob");
+
+
+if(
+!pdfBlob ||
+pdfBlob.size<100
+){
+
+throw new Error("O arquivo PDF gerado está vazio ou inválido.");
+
+}
+
+
+/* =========================================
+   DOWNLOAD
+========================================= */
+
+const blobUrl=URL.createObjectURL(pdfBlob);
+
+const link=document.createElement("a");
+
+link.href=blobUrl;
+
+link.download=
+"pixora-" +
+new Date().toISOString().slice(0,10) +
+".pdf";
+
+link.style.display="none";
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
 
 /*
-  Recria as páginas com dimensões
-  proporcionais e centralizadas.
+   Libera a memória depois do download.
 */
 
-const preparedPages=[];
+setTimeout(()=>{
+URL.revokeObjectURL(blobUrl);
+},5000);
 
-for(let i=0;i<pages.length;i++){
 
-const p=pages[i];
-
-const pageWidth=595;
-const pageHeight=842;
-
-const margin=23;
-
-const ratio=Math.min(
-(pageWidth-margin*2)/p.width,
-(pageHeight-margin*2)/p.height
-);
-
-const w=p.width*ratio;
-const h=p.height*ratio;
-
-preparedPages.push({
-
-bytes:p.bytes,
-
-width:p.width,
-
-height:p.height,
-
-pageWidth:w,
-
-pageHeight:h
-
-});
-
-}
-
-const pdfBytes=
-createPDF(preparedPages);
-
-downloadPDF(pdfBytes);
+progress.style.width="100%";
 
 status.textContent=t.done;
 
+
 }catch(error){
 
-console.error(error);
+console.error(
+"Erro Pixora PDF:",
+error
+);
 
-status.textContent=t.error;
+status.textContent=
+t.error+
+" "+
+(error.message || "");
 
 }finally{
 
@@ -1671,8 +1507,9 @@ addMore.disabled=false;
 
 });
 
+
 /* =========================================================
-   INICIALIZAÇÃO
+   INICIALIZA
 ========================================================= */
 
 render();
@@ -1681,4 +1518,3 @@ render();
 
 </body>
 </html>
-```
