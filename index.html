@@ -1,37 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pixora PDF - Converta suas imagens em PDF gratuitamente.">
-  <meta name="theme-color" content="#4f46e5">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Pixora PDF - Converta suas imagens em PDF gratuitamente."
+  >
+
+  <meta
+    name="theme-color"
+    content="#4f46e5"
+  >
+
+  <!-- =====================================================
+       GOOGLE ADSENSE
+  ====================================================== -->
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6858529705565321"
+    crossorigin="anonymous">
+  </script>
+
 
   <title>Pixora PDF - Imagem para PDF</title>
 
-  <!-- Biblioteca para gerar PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+
+  <!-- =====================================================
+       jsPDF
+       Geração do PDF diretamente no navegador
+  ====================================================== -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"
+    crossorigin="anonymous">
+  </script>
+
 
   <style>
+
     :root {
+
       --bg: #f5f7fb;
       --white: #ffffff;
       --text: #111827;
       --muted: #64748b;
       --border: #e2e8f0;
+
       --primary: #4f46e5;
       --primary-dark: #3730a3;
+
       --danger: #dc2626;
-      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+
+      --shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.08);
+
       --radius: 22px;
+
     }
+
 
     * {
       box-sizing: border-box;
     }
 
+
     body {
+
       margin: 0;
+
       min-height: 100vh;
+
       font-family:
         Inter,
         system-ui,
@@ -43,244 +88,422 @@
       color: var(--text);
 
       background:
+
         radial-gradient(
           circle at top left,
           rgba(79, 70, 229, 0.12),
           transparent 30%
         ),
+
         radial-gradient(
           circle at top right,
           rgba(14, 165, 233, 0.08),
           transparent 30%
         ),
+
         var(--bg);
+
     }
+
 
     button,
     input {
       font: inherit;
     }
 
+
     button {
       cursor: pointer;
     }
 
+
     .container {
-      width: min(1100px, calc(100% - 30px));
+
+      width:
+        min(
+          1100px,
+          calc(100% - 30px)
+        );
+
       margin: auto;
+
     }
+
 
     header {
       padding: 25px 0;
     }
 
+
     .nav {
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
     }
+
 
     .brand {
+
       display: flex;
+
       align-items: center;
+
       gap: 12px;
+
       font-size: 20px;
+
       font-weight: 800;
+
       letter-spacing: -0.04em;
+
     }
+
 
     .brand-icon {
+
       width: 42px;
       height: 42px;
-      border-radius: 13px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
+      border-radius: 13px;
+
       color: white;
+
       font-size: 21px;
+
       font-weight: 900;
 
-      background: linear-gradient(
-        135deg,
-        #4f46e5,
-        #7c3aed
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #4f46e5,
+          #7c3aed
+        );
 
       box-shadow:
-        0 10px 25px rgba(79, 70, 229, 0.25);
+        0 10px 25px
+        rgba(
+          79,
+          70,
+          229,
+          0.25
+        );
+
     }
+
 
     .language {
-      padding: 8px 14px;
 
-      border: 1px solid var(--border);
-      border-radius: 999px;
-
-      background: white;
-
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    main {
-      padding: 35px 0 70px;
-    }
-
-    .hero {
-      max-width: 760px;
-      margin: auto;
-
-      text-align: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-
-      margin-bottom: 18px;
-      padding: 8px 13px;
-
-      border-radius: 999px;
-
-      color: var(--primary-dark);
-
-      background: #eef2ff;
-
-      border: 1px solid #e0e7ff;
-
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    h1 {
-      margin: 0 0 18px;
-
-      font-size: clamp(
-        2.3rem,
-        6vw,
-        4.2rem
-      );
-
-      line-height: 1;
-
-      letter-spacing: -0.06em;
-    }
-
-    .hero p {
-      max-width: 650px;
-
-      margin: auto;
-
-      color: var(--muted);
-
-      font-size: 17px;
-
-      line-height: 1.7;
-    }
-
-    .app {
-      margin-top: 35px;
-
-      overflow: hidden;
-
-      background: rgba(
-        255,
-        255,
-        255,
-        0.9
-      );
+      padding:
+        8px 14px;
 
       border:
         1px solid
-        rgba(226, 232, 240, 0.9);
+        var(--border);
 
-      border-radius: 28px;
+      border-radius:
+        999px;
 
-      box-shadow: var(--shadow);
+      background:
+        white;
+
+      color:
+        var(--muted);
+
+      font-size:
+        13px;
+
+      font-weight:
+        600;
+
     }
 
+
+    main {
+
+      padding:
+        35px 0 70px;
+
+    }
+
+
+    .hero {
+
+      max-width:
+        760px;
+
+      margin:
+        auto;
+
+      text-align:
+        center;
+
+    }
+
+
+    .badge {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        7px;
+
+      margin-bottom:
+        18px;
+
+      padding:
+        8px 13px;
+
+      border-radius:
+        999px;
+
+      color:
+        var(--primary-dark);
+
+      background:
+        #eef2ff;
+
+      border:
+        1px solid
+        #e0e7ff;
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    h1 {
+
+      margin:
+        0 0 18px;
+
+      font-size:
+        clamp(
+          2.3rem,
+          6vw,
+          4.2rem
+        );
+
+      line-height:
+        1;
+
+      letter-spacing:
+        -0.06em;
+
+    }
+
+
+    .hero p {
+
+      max-width:
+        650px;
+
+      margin:
+        auto;
+
+      color:
+        var(--muted);
+
+      font-size:
+        17px;
+
+      line-height:
+        1.7;
+
+    }
+
+
+    .app {
+
+      margin-top:
+        35px;
+
+      overflow:
+        hidden;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.9
+        );
+
+      border:
+        1px solid
+        rgba(
+          226,
+          232,
+          240,
+          0.9
+        );
+
+      border-radius:
+        28px;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
     .upload-area {
-      min-height: 280px;
 
-      margin: 24px;
+      min-height:
+        280px;
 
-      padding: 35px 20px;
+      margin:
+        24px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding:
+        35px 20px;
 
-      text-align: center;
+      display:
+        flex;
 
-      background: #f8fafc;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      text-align:
+        center;
+
+      background:
+        #f8fafc;
 
       border:
         2px dashed
         #cbd5e1;
 
-      border-radius: var(--radius);
+      border-radius:
+        var(--radius);
 
-      transition: 0.2s;
+      transition:
+        0.2s;
+
     }
+
 
     .upload-area.dragging {
-      border-color: var(--primary);
 
-      background: #eef2ff;
+      border-color:
+        var(--primary);
 
-      transform: scale(0.995);
+      background:
+        #eef2ff;
+
+      transform:
+        scale(
+          0.995
+        );
+
     }
+
 
     .upload-icon {
-      width: 70px;
-      height: 70px;
 
-      margin: auto auto 18px;
+      width:
+        70px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height:
+        70px;
 
-      border-radius: 20px;
+      margin:
+        auto auto 18px;
 
-      background: #eef2ff;
+      display:
+        flex;
 
-      font-size: 32px;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        20px;
+
+      background:
+        #eef2ff;
+
+      font-size:
+        32px;
+
     }
+
 
     .upload-area h2 {
-      margin: 0 0 8px;
 
-      font-size: 21px;
+      margin:
+        0 0 8px;
+
+      font-size:
+        21px;
+
     }
+
 
     .upload-area p {
-      margin: 0 0 20px;
 
-      color: var(--muted);
+      margin:
+        0 0 20px;
 
-      font-size: 14px;
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
     }
 
+
     .primary-btn {
-      min-height: 48px;
 
-      padding: 0 20px;
+      min-height:
+        48px;
 
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      padding:
+        0 20px;
 
-      border: 0;
+      display:
+        inline-flex;
 
-      border-radius: 14px;
+      align-items:
+        center;
 
-      color: white;
+      justify-content:
+        center;
+
+      gap:
+        8px;
+
+      border:
+        0;
+
+      border-radius:
+        14px;
+
+      color:
+        white;
 
       background:
         linear-gradient(
@@ -289,209 +512,359 @@
           #6366f1
         );
 
-      font-weight: 800;
+      font-weight:
+        800;
 
       box-shadow:
         0 9px 22px
-        rgba(79, 70, 229, 0.22);
-
-      transition: 0.15s;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .primary-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .secondary-btn {
-      min-height: 44px;
-
-      padding: 0 16px;
-
-      border: 1px solid var(--border);
-
-      border-radius: 12px;
-
-      background: white;
-
-      color: var(--text);
-
-      font-weight: 700;
-    }
-
-    .secondary-btn:hover {
-      background: #f8fafc;
-    }
-
-    .toolbar {
-      display: none;
-
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 15px;
-
-      padding:
-        0 24px
-        22px;
-    }
-
-    .toolbar.visible {
-      display: flex;
-    }
-
-    .count {
-      color: var(--muted);
-
-      font-size: 14px;
-
-      font-weight: 700;
-    }
-
-    .image-list {
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fill,
-          minmax(210px, 1fr)
+        rgba(
+          79,
+          70,
+          229,
+          0.22
         );
 
-      gap: 16px;
+      transition:
+        0.15s;
 
-      padding:
-        0 24px
-        24px;
     }
 
-    .image-card {
-      overflow: hidden;
 
-      background: white;
+    .primary-btn:hover {
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    .primary-btn:disabled {
+
+      opacity:
+        0.5;
+
+      cursor:
+        not-allowed;
+
+      transform:
+        none;
+
+    }
+
+
+    .secondary-btn {
+
+      min-height:
+        44px;
+
+      padding:
+        0 16px;
 
       border:
         1px solid
         var(--border);
 
-      border-radius: 18px;
+      border-radius:
+        12px;
+
+      background:
+        white;
+
+      color:
+        var(--text);
+
+      font-weight:
+        700;
+
+    }
+
+
+    .secondary-btn:hover {
+
+      background:
+        #f8fafc;
+
+    }
+
+
+    .toolbar {
+
+      display:
+        none;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      padding:
+        0 24px 22px;
+
+    }
+
+
+    .toolbar.visible {
+
+      display:
+        flex;
+
+    }
+
+
+    .count {
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .image-list {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(
+            210px,
+            1fr
+          )
+        );
+
+      gap:
+        16px;
+
+      padding:
+        0 24px 24px;
+
+    }
+
+
+    .image-card {
+
+      overflow:
+        hidden;
+
+      background:
+        white;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        18px;
 
       box-shadow:
         0 7px 22px
-        rgba(15, 23, 42, 0.05);
+        rgba(
+          15,
+          23,
+          42,
+          0.05
+        );
+
     }
+
 
     .thumbnail {
-      position: relative;
 
-      aspect-ratio: 4 / 3;
+      position:
+        relative;
 
-      overflow: hidden;
+      aspect-ratio:
+        4 / 3;
 
-      background: #eef2f7;
+      overflow:
+        hidden;
+
+      background:
+        #eef2f7;
+
     }
+
 
     .thumbnail img {
-      width: 100%;
-      height: 100%;
 
-      display: block;
+      width:
+        100%;
 
-      object-fit: contain;
+      height:
+        100%;
+
+      display:
+        block;
+
+      object-fit:
+        contain;
+
     }
+
 
     .number {
-      position: absolute;
 
-      top: 10px;
-      left: 10px;
+      position:
+        absolute;
 
-      min-width: 30px;
-      height: 30px;
+      top:
+        10px;
 
-      padding: 0 8px;
+      left:
+        10px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-width:
+        30px;
 
-      border-radius: 999px;
+      height:
+        30px;
 
-      background: rgba(
-        15,
-        23,
-        42,
-        0.78
-      );
+      padding:
+        0 8px;
 
-      color: white;
+      display:
+        flex;
 
-      font-size: 12px;
-      font-weight: 800;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(
+          15,
+          23,
+          42,
+          0.78
+        );
+
+      color:
+        white;
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
     }
+
 
     .card-body {
-      padding: 12px;
+
+      padding:
+        12px;
+
     }
+
 
     .filename {
-      margin-bottom: 10px;
 
-      overflow: hidden;
+      margin-bottom:
+        10px;
 
-      white-space: nowrap;
+      overflow:
+        hidden;
 
-      text-overflow: ellipsis;
+      white-space:
+        nowrap;
 
-      font-size: 13px;
+      text-overflow:
+        ellipsis;
 
-      font-weight: 700;
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+
     }
+
 
     .actions {
-      display: flex;
 
-      gap: 7px;
+      display:
+        flex;
+
+      gap:
+        7px;
+
     }
+
 
     .mini-btn {
-      flex: 1;
 
-      min-height: 36px;
+      flex:
+        1;
 
-      border: 0;
+      min-height:
+        36px;
 
-      border-radius: 10px;
+      border:
+        0;
 
-      background: #f1f5f9;
+      border-radius:
+        10px;
 
-      color: #334155;
+      background:
+        #f1f5f9;
 
-      font-size: 12px;
+      color:
+        #334155;
 
-      font-weight: 750;
+      font-size:
+        12px;
+
+      font-weight:
+        750;
+
     }
+
 
     .mini-btn:hover {
-      background: #e2e8f0;
+
+      background:
+        #e2e8f0;
+
     }
+
 
     .mini-btn.danger {
-      color: var(--danger);
 
-      background: #fef2f2;
+      color:
+        var(--danger);
+
+      background:
+        #fef2f2;
+
     }
 
+
     .bottom {
-      display: none;
 
-      align-items: center;
+      display:
+        none;
 
-      gap: 12px;
+      align-items:
+        center;
+
+      gap:
+        12px;
 
       padding:
         20px 24px;
@@ -500,45 +873,72 @@
         1px solid
         var(--border);
 
-      background: #fafcff;
+      background:
+        #fafcff;
+
     }
+
 
     .bottom.visible {
-      display: flex;
+
+      display:
+        flex;
+
     }
+
 
     .status {
-      flex: 1;
 
-      color: var(--muted);
+      flex:
+        1;
 
-      font-size: 14px;
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
     }
+
 
     .progress-container {
-      display: none;
 
-      height: 8px;
+      display:
+        none;
+
+      height:
+        8px;
 
       margin:
-        0 24px
-        20px;
+        0 24px 20px;
 
-      overflow: hidden;
+      overflow:
+        hidden;
 
-      border-radius: 999px;
+      border-radius:
+        999px;
 
-      background: #e2e8f0;
+      background:
+        #e2e8f0;
+
     }
+
 
     .progress-container.visible {
-      display: block;
+
+      display:
+        block;
+
     }
 
-    .progress {
-      width: 0;
 
-      height: 100%;
+    .progress {
+
+      width:
+        0;
+
+      height:
+        100%;
 
       background:
         linear-gradient(
@@ -547,28 +947,44 @@
           #8b5cf6
         );
 
-      transition: width 0.2s;
+      transition:
+        width
+        0.2s;
+
     }
+
 
     .tips {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(
+          3,
+          1fr
+        );
 
-      gap: 16px;
+      gap:
+        16px;
 
-      margin-top: 22px;
+      margin-top:
+        22px;
+
     }
 
+
     .tip {
-      padding: 20px;
+
+      padding:
+        20px;
 
       border:
         1px solid
         var(--border);
 
-      border-radius: 18px;
+      border-radius:
+        18px;
 
       background:
         rgba(
@@ -577,109 +993,194 @@
           255,
           0.75
         );
+
     }
+
 
     .tip strong {
-      display: block;
 
-      margin-bottom: 7px;
+      display:
+        block;
+
+      margin-bottom:
+        7px;
+
     }
+
 
     .tip span {
-      color: var(--muted);
 
-      font-size: 13px;
+      color:
+        var(--muted);
 
-      line-height: 1.5;
+      font-size:
+        13px;
+
+      line-height:
+        1.5;
+
     }
+
 
     footer {
-      padding: 10px 0 35px;
 
-      text-align: center;
+      padding:
+        10px 0 35px;
 
-      color: var(--muted);
+      text-align:
+        center;
 
-      font-size: 13px;
+      color:
+        var(--muted);
+
+      font-size:
+        13px;
+
     }
+
 
     .hidden {
-      position: absolute;
 
-      width: 1px;
-      height: 1px;
+      position:
+        absolute;
 
-      opacity: 0;
+      width:
+        1px;
+
+      height:
+        1px;
+
+      opacity:
+        0;
+
     }
 
-    @media (max-width: 700px) {
+
+    @media (
+      max-width: 700px
+    ) {
+
       .container {
+
         width:
-          calc(100% - 20px);
+          calc(
+            100% - 20px
+          );
+
       }
 
       main {
-        padding-top: 20px;
+
+        padding-top:
+          20px;
+
       }
 
       .upload-area {
-        margin: 12px;
 
-        min-height: 240px;
+        margin:
+          12px;
+
+        min-height:
+          240px;
+
       }
 
       .toolbar,
       .bottom {
-        padding-left: 12px;
-        padding-right: 12px;
+
+        padding-left:
+          12px;
+
+        padding-right:
+          12px;
+
       }
 
       .image-list {
+
         padding:
-          0 12px
-          12px;
+          0 12px 12px;
 
         grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+          repeat(
+            2,
+            minmax(
+              0,
+              1fr
+            )
+          );
 
-        gap: 10px;
+        gap:
+          10px;
+
       }
 
       .tips {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
 
       .bottom {
-        flex-wrap: wrap;
+
+        flex-wrap:
+          wrap;
+
       }
 
       .status {
-        flex-basis: 100%;
+
+        flex-basis:
+          100%;
+
       }
+
     }
 
-    @media (max-width: 430px) {
+
+    @media (
+      max-width: 430px
+    ) {
+
       .language {
-        display: none;
+
+        display:
+          none;
+
       }
 
       h1 {
-        font-size: 2.5rem;
+
+        font-size:
+          2.5rem;
+
       }
 
       .actions {
-        flex-direction: column;
+
+        flex-direction:
+          column;
+
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
   <div class="container nav">
 
     <div class="brand">
+
       <div class="brand-icon">
         P
       </div>
@@ -687,7 +1188,9 @@
       <span>
         Pixora PDF
       </span>
+
     </div>
+
 
     <div
       class="language"
@@ -697,35 +1200,48 @@
     </div>
 
   </div>
+
 </header>
+
 
 <main>
 
   <div class="container">
 
+
     <section class="hero">
 
       <div class="badge">
+
         ⚡
+
         <span id="badge">
           Rápido e privado
         </span>
+
       </div>
 
+
       <h1 id="title">
+
         Transforme suas imagens em PDF
+
       </h1>
 
+
       <p id="subtitle">
+
         Selecione quantas imagens quiser,
         organize a ordem e baixe um único PDF.
         Tudo acontece diretamente no seu navegador.
+
       </p>
 
     </section>
 
 
     <section class="app">
+
 
       <input
         id="fileInput"
@@ -748,24 +1264,34 @@
             📄
           </div>
 
+
           <h2 id="dropTitle">
+
             Arraste suas imagens aqui
+
           </h2>
 
+
           <p id="dropText">
+
             JPG, PNG, WEBP e outros formatos
             comuns de imagem
+
           </p>
+
 
           <button
             class="primary-btn"
             id="selectBtn"
             type="button"
           >
+
             ＋
+
             <span id="selectText">
               Selecionar imagens
             </span>
+
           </button>
 
         </div>
@@ -783,12 +1309,15 @@
           id="count"
         ></div>
 
+
         <button
           class="secondary-btn"
           id="addMore"
           type="button"
         >
+
           ＋ Adicionar mais
+
         </button>
 
       </div>
@@ -823,23 +1352,32 @@
           id="status"
         ></div>
 
+
         <button
           class="secondary-btn"
           id="clearBtn"
           type="button"
         >
+
           Limpar tudo
+
         </button>
+
 
         <button
           class="primary-btn"
           id="convertBtn"
           type="button"
         >
+
           ↓
+
           <span id="convertText">
+
             Criar e baixar PDF
+
           </span>
+
         </button>
 
       </div>
@@ -849,6 +1387,7 @@
 
     <section class="tips">
 
+
       <div class="tip">
 
         <strong>
@@ -856,8 +1395,10 @@
         </strong>
 
         <span id="privateText">
+
           Suas imagens são processadas
           localmente no seu navegador.
+
         </span>
 
       </div>
@@ -870,8 +1411,10 @@
         </strong>
 
         <span id="multiText">
+
           Escolha várias imagens e combine
           todas em um único PDF.
+
         </span>
 
       </div>
@@ -884,13 +1427,17 @@
         </strong>
 
         <span id="globalText">
+
           A interface acompanha
           automaticamente o idioma do navegador.
+
         </span>
 
       </div>
 
+
     </section>
+
 
   </div>
 
@@ -907,7 +1454,9 @@
   ·
 
   <span id="footerText">
+
     Conversão de imagens diretamente no navegador.
+
   </span>
 
 </footer>
@@ -915,326 +1464,366 @@
 
 <script>
 
-"use strict";
-
-
-/* =========================================================
-   IDIOMAS
-========================================================= */
+/* =====================================================
+   TRADUÇÕES
+===================================================== */
 
 const translations = {
 
   pt: {
+
     language: "Português",
-    badge: "Rápido e privado",
-    title: "Transforme suas imagens em PDF",
+
+    badge:
+      "Rápido e privado",
+
+    title:
+      "Transforme suas imagens em PDF",
+
     subtitle:
       "Selecione quantas imagens quiser, organize a ordem e baixe um único PDF. Tudo acontece diretamente no seu navegador.",
-    dropTitle: "Arraste suas imagens aqui",
+
+    dropTitle:
+      "Arraste suas imagens aqui",
+
     dropText:
       "JPG, PNG, WEBP e outros formatos comuns de imagem",
-    select: "Selecionar imagens",
-    addMore: "＋ Adicionar mais",
-    clear: "Limpar tudo",
-    convert: "Criar e baixar PDF",
+
+    select:
+      "Selecionar imagens",
+
+    addMore:
+      "＋ Adicionar mais",
+
+    clear:
+      "Limpar tudo",
+
+    convert:
+      "Criar e baixar PDF",
+
     privateText:
       "Suas imagens são processadas localmente no seu navegador.",
+
     multiText:
       "Escolha várias imagens e combine todas em um único PDF.",
+
     globalText:
       "A interface acompanha automaticamente o idioma do seu navegador.",
+
     footer:
       "Conversão de imagens diretamente no navegador.",
-    selected: "imagem(ns) selecionada(s)",
-    remove: "Remover",
-    up: "Subir",
-    down: "Descer",
-    ready: "Pronto para criar seu PDF.",
-    creating: "Criando PDF...",
-    done: "PDF criado com sucesso.",
+
+    selected:
+      "imagem(ns) selecionada(s)",
+
+    remove:
+      "Remover",
+
+    up:
+      "Subir",
+
+    down:
+      "Descer",
+
+    ready:
+      "Pronto para criar seu PDF.",
+
+    creating:
+      "Criando PDF...",
+
+    done:
+      "PDF criado com sucesso.",
+
     noImages:
       "Selecione pelo menos uma imagem primeiro.",
+
     libraryError:
       "Não foi possível carregar a biblioteca de PDF. Verifique sua conexão com a internet.",
+
     invalid:
       "Alguns arquivos não eram imagens e foram ignorados.",
+
     error:
       "Ocorreu um erro ao criar o PDF."
+
   },
+
 
   en: {
-    language: "English",
-    badge: "Fast & private",
-    title: "Turn your images into PDF",
+
+    language:
+      "English",
+
+    badge:
+      "Fast & private",
+
+    title:
+      "Turn your images into PDF",
+
     subtitle:
       "Select as many images as you want, arrange them and download one PDF. Everything happens directly in your browser.",
-    dropTitle: "Drop your images here",
+
+    dropTitle:
+      "Drop your images here",
+
     dropText:
       "JPG, PNG, WEBP and other common image formats",
-    select: "Select images",
-    addMore: "＋ Add more",
-    clear: "Clear all",
-    convert: "Create & download PDF",
+
+    select:
+      "Select images",
+
+    addMore:
+      "＋ Add more",
+
+    clear:
+      "Clear all",
+
+    convert:
+      "Create & download PDF",
+
     privateText:
       "Your images are processed locally in your browser.",
+
     multiText:
       "Choose several images and combine them into one PDF.",
+
     globalText:
       "The interface automatically follows your browser language.",
+
     footer:
       "Image conversion directly in your browser.",
-    selected: "image(s) selected",
-    remove: "Remove",
-    up: "Up",
-    down: "Down",
-    ready: "Ready to create your PDF.",
-    creating: "Creating PDF...",
-    done: "PDF created successfully.",
+
+    selected:
+      "image(s) selected",
+
+    remove:
+      "Remove",
+
+    up:
+      "Up",
+
+    down:
+      "Down",
+
+    ready:
+      "Ready to create your PDF.",
+
+    creating:
+      "Creating PDF...",
+
+    done:
+      "PDF created successfully.",
+
     noImages:
       "Select at least one image first.",
+
     libraryError:
       "The PDF library could not be loaded. Check your internet connection.",
+
     invalid:
       "Some files were not images and were ignored.",
+
     error:
       "Something went wrong while creating the PDF."
+
   },
+
 
   es: {
-    language: "Español",
-    badge: "Rápido y privado",
-    title: "Convierte tus imágenes a PDF",
+
+    language:
+      "Español",
+
+    badge:
+      "Rápido y privado",
+
+    title:
+      "Convierte tus imágenes a PDF",
+
     subtitle:
-      "Selecciona tantas imágenes como quieras, ordénalas y descarga un solo PDF. Todo ocurre directamente en tu navegador.",
-    dropTitle: "Suelta tus imágenes aquí",
+      "Selecciona tantas imágenes como quieras, ordénalas y descarga un solo PDF.",
+
+    dropTitle:
+      "Suelta tus imágenes aquí",
+
     dropText:
       "JPG, PNG, WEBP y otros formatos comunes",
-    select: "Seleccionar imágenes",
-    addMore: "＋ Añadir más",
-    clear: "Limpiar todo",
-    convert: "Crear y descargar PDF",
+
+    select:
+      "Seleccionar imágenes",
+
+    addMore:
+      "＋ Añadir más",
+
+    clear:
+      "Limpiar todo",
+
+    convert:
+      "Crear y descargar PDF",
+
     privateText:
       "Tus imágenes se procesan localmente en tu navegador.",
+
     multiText:
       "Elige varias imágenes y combínalas en un solo PDF.",
+
     globalText:
       "La interfaz sigue automáticamente el idioma de tu navegador.",
+
     footer:
       "Conversión de imágenes directamente en el navegador.",
-    selected: "imagen(es) seleccionada(s)",
-    remove: "Eliminar",
-    up: "Subir",
-    down: "Bajar",
-    ready: "Listo para crear tu PDF.",
-    creating: "Creando PDF...",
-    done: "PDF creado correctamente.",
+
+    selected:
+      "imagen(es) seleccionada(s)",
+
+    remove:
+      "Eliminar",
+
+    up:
+      "Subir",
+
+    down:
+      "Bajar",
+
+    ready:
+      "Listo para crear tu PDF.",
+
+    creating:
+      "Creando PDF...",
+
+    done:
+      "PDF creado correctamente.",
+
     noImages:
       "Selecciona al menos una imagen primero.",
+
     libraryError:
-      "No se pudo cargar la biblioteca PDF. Comprueba tu conexión.",
+      "No se pudo cargar la biblioteca PDF.",
+
     invalid:
-      "Algunos archivos no eran imágenes y fueron ignorados.",
+      "Algunos archivos no eran imágenes.",
+
     error:
       "Ocurrió un error al crear el PDF."
-  },
 
-  fr: {
-    language: "Français",
-    badge: "Rapide et privé",
-    title: "Transformez vos images en PDF",
-    subtitle:
-      "Sélectionnez autant d’images que vous voulez, organisez-les et téléchargez un seul PDF.",
-    dropTitle: "Déposez vos images ici",
-    dropText:
-      "JPG, PNG, WEBP et autres formats courants",
-    select: "Sélectionner des images",
-    addMore: "＋ Ajouter",
-    clear: "Tout effacer",
-    convert: "Créer et télécharger le PDF",
-    privateText:
-      "Vos images sont traitées localement dans votre navigateur.",
-    multiText:
-      "Choisissez plusieurs images et combinez-les dans un seul PDF.",
-    globalText:
-      "L’interface suit automatiquement la langue de votre navigateur.",
-    footer:
-      "Conversion d’images directement dans le navigateur.",
-    selected: "image(s) sélectionnée(s)",
-    remove: "Supprimer",
-    up: "Monter",
-    down: "Descendre",
-    ready: "Prêt à créer votre PDF.",
-    creating: "Création du PDF...",
-    done: "PDF créé avec succès.",
-    noImages:
-      "Sélectionnez au moins une image.",
-    libraryError:
-      "La bibliothèque PDF n’a pas pu être chargée.",
-    invalid:
-      "Certains fichiers n’étaient pas des images.",
-    error:
-      "Une erreur s’est produite."
-  },
-
-  de: {
-    language: "Deutsch",
-    badge: "Schnell und privat",
-    title: "Bilder in PDF umwandeln",
-    subtitle:
-      "Wählen Sie beliebig viele Bilder aus, ordnen Sie sie und laden Sie eine PDF-Datei herunter.",
-    dropTitle: "Bilder hier ablegen",
-    dropText:
-      "JPG, PNG, WEBP und andere gängige Formate",
-    select: "Bilder auswählen",
-    addMore: "＋ Weitere hinzufügen",
-    clear: "Alle löschen",
-    convert: "PDF erstellen und herunterladen",
-    privateText:
-      "Ihre Bilder werden lokal im Browser verarbeitet.",
-    multiText:
-      "Wählen Sie mehrere Bilder und kombinieren Sie sie in einer PDF-Datei.",
-    globalText:
-      "Die Oberfläche folgt automatisch der Sprache Ihres Browsers.",
-    footer:
-      "Bildkonvertierung direkt im Browser.",
-    selected: "Bild(er) ausgewählt",
-    remove: "Entfernen",
-    up: "Nach oben",
-    down: "Nach unten",
-    ready: "Bereit.",
-    creating: "PDF wird erstellt...",
-    done: "PDF erfolgreich erstellt.",
-    noImages:
-      "Wählen Sie zuerst mindestens ein Bild aus.",
-    libraryError:
-      "Die PDF-Bibliothek konnte nicht geladen werden.",
-    invalid:
-      "Einige Dateien waren keine Bilder.",
-    error:
-      "Beim Erstellen des PDFs ist ein Fehler aufgetreten."
-  },
-
-  it: {
-    language: "Italiano",
-    badge: "Veloce e privato",
-    title: "Trasforma le immagini in PDF",
-    subtitle:
-      "Seleziona tutte le immagini che vuoi, ordinalle e scarica un unico PDF.",
-    dropTitle: "Trascina qui le immagini",
-    dropText:
-      "JPG, PNG, WEBP e altri formati comuni",
-    select: "Seleziona immagini",
-    addMore: "＋ Aggiungi altro",
-    clear: "Cancella tutto",
-    convert: "Crea e scarica PDF",
-    privateText:
-      "Le immagini vengono elaborate localmente nel browser.",
-    multiText:
-      "Scegli più immagini e uniscile in un unico PDF.",
-    globalText:
-      "L’interfaccia segue automaticamente la lingua del browser.",
-    footer:
-      "Conversione delle immagini direttamente nel browser.",
-    selected: "immagine/i selezionata/e",
-    remove: "Rimuovi",
-    up: "Su",
-    down: "Giù",
-    ready: "Pronto.",
-    creating: "Creazione del PDF...",
-    done: "PDF creato con successo.",
-    noImages:
-      "Seleziona almeno un’immagine.",
-    libraryError:
-      "Impossibile caricare la libreria PDF.",
-    invalid:
-      "Alcuni file non erano immagini.",
-    error:
-      "Si è verificato un errore."
   }
 
 };
 
 
-/* =========================================================
-   IDIOMA AUTOMÁTICO
-========================================================= */
+/* =====================================================
+   IDIOMA DO NAVEGADOR
+===================================================== */
 
 const browserLanguage =
   navigator.language
     .toLowerCase()
     .split("-")[0];
 
+
 const currentLanguage =
   translations[browserLanguage]
     ? browserLanguage
     : "en";
 
+
 const t =
-  translations[currentLanguage];
+  translations[
+    currentLanguage
+  ];
+
+
+/* =====================================================
+   APLICA IDIOMA
+===================================================== */
 
 document.documentElement.lang =
   currentLanguage;
 
 
-/* =========================================================
-   APLICA TRADUÇÕES
-========================================================= */
-
 document.getElementById(
   "languageLabel"
-).textContent = t.language;
+).textContent =
+  t.language;
+
 
 document.getElementById(
   "badge"
-).textContent = t.badge;
+).textContent =
+  t.badge;
+
 
 document.getElementById(
   "title"
-).textContent = t.title;
+).textContent =
+  t.title;
+
 
 document.getElementById(
   "subtitle"
-).textContent = t.subtitle;
+).textContent =
+  t.subtitle;
+
 
 document.getElementById(
   "dropTitle"
-).textContent = t.dropTitle;
+).textContent =
+  t.dropTitle;
+
 
 document.getElementById(
   "dropText"
-).textContent = t.dropText;
+).textContent =
+  t.dropText;
+
 
 document.getElementById(
   "selectText"
-).textContent = t.select;
+).textContent =
+  t.select;
+
 
 document.getElementById(
   "addMore"
-).textContent = t.addMore;
+).textContent =
+  t.addMore;
+
 
 document.getElementById(
   "clearBtn"
-).textContent = t.clear;
+).textContent =
+  t.clear;
+
 
 document.getElementById(
   "convertText"
-).textContent = t.convert;
+).textContent =
+  t.convert;
+
 
 document.getElementById(
   "privateText"
-).textContent = t.privateText;
+).textContent =
+  t.privateText;
+
 
 document.getElementById(
   "multiText"
-).textContent = t.multiText;
+).textContent =
+  t.multiText;
+
 
 document.getElementById(
   "globalText"
-).textContent = t.globalText;
+).textContent =
+  t.globalText;
+
 
 document.getElementById(
   "footerText"
-).textContent = t.footer;
+).textContent =
+  t.footer;
+
 
 document.getElementById(
   "year"
@@ -1242,69 +1831,81 @@ document.getElementById(
   new Date().getFullYear();
 
 
-/* =========================================================
+/* =====================================================
    ELEMENTOS
-========================================================= */
+===================================================== */
 
 const fileInput =
   document.getElementById(
     "fileInput"
   );
 
+
 const selectBtn =
   document.getElementById(
     "selectBtn"
   );
+
 
 const addMore =
   document.getElementById(
     "addMore"
   );
 
+
 const dropZone =
   document.getElementById(
     "dropZone"
   );
+
 
 const imageList =
   document.getElementById(
     "imageList"
   );
 
+
 const toolbar =
   document.getElementById(
     "toolbar"
   );
+
 
 const bottom =
   document.getElementById(
     "bottom"
   );
 
+
 const count =
   document.getElementById(
     "count"
   );
+
 
 const clearBtn =
   document.getElementById(
     "clearBtn"
   );
 
+
 const convertBtn =
   document.getElementById(
     "convertBtn"
   );
+
 
 const status =
   document.getElementById(
     "status"
   );
 
+
 const progressContainer =
   document.getElementById(
     "progressContainer"
   );
+
 
 const progress =
   document.getElementById(
@@ -1312,61 +1913,57 @@ const progress =
   );
 
 
-/* =========================================================
-   LISTA DE IMAGENS
-========================================================= */
-
 let images = [];
 
 
-/* =========================================================
-   ADICIONAR ARQUIVOS
-========================================================= */
+/* =====================================================
+   ADICIONAR IMAGENS
+===================================================== */
 
-function addFiles(fileList) {
+function addFiles(
+  fileList
+) {
 
   const files =
-    Array.from(fileList || []);
+    Array.from(
+      fileList || []
+    );
 
-  let ignored = false;
 
-  files.forEach(file => {
+  files.forEach(
+    file => {
 
-    if (
-      !file.type ||
-      !file.type.startsWith(
-        "image/"
-      )
-    ) {
-      ignored = true;
-      return;
-    }
-
-    images.push({
-
-      id:
-        Date.now() +
-        Math.random(),
-
-      file: file,
-
-      url:
-        URL.createObjectURL(
-          file
+      if (
+        !file.type.startsWith(
+          "image/"
         )
+      ) {
+        return;
+      }
 
-    });
 
-  });
+      images.push({
+
+        file:
+
+          file,
+
+        url:
+
+          URL.createObjectURL(
+            file
+          )
+
+      });
+
+    }
+  );
+
 
   render();
 
-  if (ignored) {
 
-    status.textContent =
-      t.invalid;
-
-  } else if (images.length) {
+  if (images.length) {
 
     status.textContent =
       t.ready;
@@ -1376,13 +1973,15 @@ function addFiles(fileList) {
 }
 
 
-/* =========================================================
-   RENDERIZAÇÃO
-========================================================= */
+/* =====================================================
+   RENDER
+===================================================== */
 
 function render() {
 
-  imageList.innerHTML = "";
+  imageList.innerHTML =
+    "";
+
 
   images.forEach(
     (item, index) => {
@@ -1391,6 +1990,7 @@ function render() {
         document.createElement(
           "div"
         );
+
 
       card.className =
         "image-card";
@@ -1401,6 +2001,7 @@ function render() {
           "div"
         );
 
+
       thumbnail.className =
         "thumbnail";
 
@@ -1409,6 +2010,7 @@ function render() {
         document.createElement(
           "img"
         );
+
 
       img.src =
         item.url;
@@ -1422,8 +2024,10 @@ function render() {
           "div"
         );
 
+
       number.className =
         "number";
+
 
       number.textContent =
         index + 1;
@@ -1432,6 +2036,7 @@ function render() {
       thumbnail.appendChild(
         img
       );
+
 
       thumbnail.appendChild(
         number
@@ -1443,6 +2048,7 @@ function render() {
           "div"
         );
 
+
       body.className =
         "card-body";
 
@@ -1452,13 +2058,12 @@ function render() {
           "div"
         );
 
+
       filename.className =
         "filename";
 
-      filename.textContent =
-        item.file.name;
 
-      filename.title =
+      filename.textContent =
         item.file.name;
 
 
@@ -1466,6 +2071,7 @@ function render() {
         document.createElement(
           "div"
         );
+
 
       actions.className =
         "actions";
@@ -1476,20 +2082,25 @@ function render() {
           "button"
         );
 
+
       up.className =
         "mini-btn";
+
 
       up.textContent =
         "↑ " + t.up;
 
+
       up.disabled =
         index === 0;
 
+
       up.onclick =
-        () => moveImage(
-          index,
-          -1
-        );
+        () =>
+          moveImage(
+            index,
+            -1
+          );
 
 
       const down =
@@ -1497,21 +2108,26 @@ function render() {
           "button"
         );
 
+
       down.className =
         "mini-btn";
 
+
       down.textContent =
         "↓ " + t.down;
+
 
       down.disabled =
         index ===
         images.length - 1;
 
+
       down.onclick =
-        () => moveImage(
-          index,
-          1
-        );
+        () =>
+          moveImage(
+            index,
+            1
+          );
 
 
       const remove =
@@ -1519,16 +2135,20 @@ function render() {
           "button"
         );
 
+
       remove.className =
         "mini-btn danger";
+
 
       remove.textContent =
         "× " + t.remove;
 
+
       remove.onclick =
-        () => removeImage(
-          index
-        );
+        () =>
+          removeImage(
+            index
+          );
 
 
       actions.appendChild(
@@ -1579,6 +2199,7 @@ function render() {
     hasImages
   );
 
+
   bottom.classList.toggle(
     "visible",
     hasImages
@@ -1593,9 +2214,9 @@ function render() {
 }
 
 
-/* =========================================================
-   MOVER IMAGEM
-========================================================= */
+/* =====================================================
+   MOVER
+===================================================== */
 
 function moveImage(
   index,
@@ -1605,6 +2226,7 @@ function moveImage(
   const target =
     index + direction;
 
+
   if (
     target < 0 ||
     target >= images.length
@@ -1612,90 +2234,102 @@ function moveImage(
     return;
   }
 
-  const temp =
-    images[index];
 
-  images[index] =
-    images[target];
+  [
+    images[index],
+    images[target]
+  ] =
+  [
+    images[target],
+    images[index]
+  ];
 
-  images[target] =
-    temp;
 
   render();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    REMOVER
-========================================================= */
+===================================================== */
 
-function removeImage(index) {
+function removeImage(
+  index
+) {
 
   if (!images[index]) {
     return;
   }
 
+
   URL.revokeObjectURL(
     images[index].url
   );
+
 
   images.splice(
     index,
     1
   );
 
-  render();
 
-  status.textContent =
-    images.length
-      ? t.ready
-      : "";
+  render();
 
 }
 
 
-/* =========================================================
-   LIMPAR TUDO
-========================================================= */
+/* =====================================================
+   LIMPAR
+===================================================== */
 
-function clearAll() {
+clearBtn.onclick =
+  () => {
 
-  images.forEach(
-    item => {
+    images.forEach(
+      item => {
 
-      URL.revokeObjectURL(
-        item.url
-      );
+        URL.revokeObjectURL(
+          item.url
+        );
 
-    }
-  );
-
-  images = [];
-
-  render();
-
-  status.textContent = "";
-
-  progressContainer.classList.remove(
-    "visible"
-  );
-
-  progress.style.width =
-    "0%";
-
-}
+      }
+    );
 
 
-/* =========================================================
-   BOTÕES
-========================================================= */
+    images = [];
+
+
+    render();
+
+
+    status.textContent =
+      "";
+
+
+    progress.style.width =
+      "0%";
+
+
+    progressContainer.classList.remove(
+      "visible"
+    );
+
+  };
+
+
+/* =====================================================
+   SELEÇÃO
+===================================================== */
 
 selectBtn.onclick =
-  () => fileInput.click();
+  () =>
+    fileInput.click();
+
 
 addMore.onclick =
-  () => fileInput.click();
+  () =>
+    fileInput.click();
 
 
 fileInput.addEventListener(
@@ -1706,19 +2340,17 @@ fileInput.addEventListener(
       event.target.files
     );
 
-    fileInput.value = "";
+
+    fileInput.value =
+      "";
 
   }
 );
 
 
-clearBtn.onclick =
-  clearAll;
-
-
-/* =========================================================
+/* =====================================================
    DRAG AND DROP
-========================================================= */
+===================================================== */
 
 [
   "dragenter",
@@ -1731,8 +2363,6 @@ clearBtn.onclick =
       event => {
 
         event.preventDefault();
-
-        event.stopPropagation();
 
         dropZone.classList.add(
           "dragging"
@@ -1757,8 +2387,6 @@ clearBtn.onclick =
 
         event.preventDefault();
 
-        event.stopPropagation();
-
         dropZone.classList.remove(
           "dragging"
         );
@@ -1782,38 +2410,25 @@ dropZone.addEventListener(
 );
 
 
-dropZone.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter" ||
-      event.key === " "
-    ) {
-
-      event.preventDefault();
-
-      fileInput.click();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
+/* =====================================================
    CARREGAR IMAGEM
-========================================================= */
+===================================================== */
 
-function loadImage(file) {
+function loadImage(
+  file
+) {
 
   return new Promise(
-    (resolve, reject) => {
+    (
+      resolve,
+      reject
+    ) => {
 
       const url =
         URL.createObjectURL(
           file
         );
+
 
       const img =
         new Image();
@@ -1826,7 +2441,9 @@ function loadImage(file) {
             url
           );
 
-          resolve(img);
+          resolve(
+            img
+          );
 
         };
 
@@ -1840,7 +2457,7 @@ function loadImage(file) {
 
           reject(
             new Error(
-              "Erro ao carregar imagem"
+              "Image error"
             )
           );
 
@@ -1856,9 +2473,9 @@ function loadImage(file) {
 }
 
 
-/* =========================================================
-   CONVERTER IMAGEM PARA JPEG
-========================================================= */
+/* =====================================================
+   PREPARAR IMAGEM
+===================================================== */
 
 function imageToJPEG(
   img,
@@ -1867,6 +2484,7 @@ function imageToJPEG(
 
   let width =
     img.naturalWidth;
+
 
   let height =
     img.naturalHeight;
@@ -1883,10 +2501,12 @@ function imageToJPEG(
         maxSize / height
       );
 
+
     width =
       Math.round(
         width * scale
       );
+
 
     height =
       Math.round(
@@ -1901,8 +2521,10 @@ function imageToJPEG(
       "canvas"
     );
 
+
   canvas.width =
     width;
+
 
   canvas.height =
     height;
@@ -1917,6 +2539,7 @@ function imageToJPEG(
   ctx.fillStyle =
     "#ffffff";
 
+
   ctx.fillRect(
     0,
     0,
@@ -1927,6 +2550,7 @@ function imageToJPEG(
 
   ctx.imageSmoothingEnabled =
     true;
+
 
   ctx.imageSmoothingQuality =
     "high";
@@ -1949,17 +2573,20 @@ function imageToJPEG(
         0.92
       ),
 
-    width,
-    height
+    width:
+      width,
+
+    height:
+      height
 
   };
 
 }
 
 
-/* =========================================================
-   CRIAR PDF
-========================================================= */
+/* =====================================================
+   CONVERTER PARA PDF
+===================================================== */
 
 convertBtn.addEventListener(
   "click",
@@ -1993,8 +2620,10 @@ convertBtn.addEventListener(
     convertBtn.disabled =
       true;
 
+
     clearBtn.disabled =
       true;
+
 
     addMore.disabled =
       true;
@@ -2003,6 +2632,7 @@ convertBtn.addEventListener(
     progressContainer.classList.add(
       "visible"
     );
+
 
     progress.style.width =
       "0%";
@@ -2016,10 +2646,12 @@ convertBtn.addEventListener(
 
       const {
         jsPDF
-      } = window.jspdf;
+      } =
+        window.jspdf;
 
 
-      let pdf = null;
+      let pdf =
+        null;
 
 
       for (
@@ -2040,28 +2672,32 @@ convertBtn.addEventListener(
           );
 
 
-        /*
-          A4:
-          210 x 297 mm
-        */
-
         const margin =
           8;
 
 
         const ratio =
           Math.min(
-            (210 - margin * 2) /
+
+            (
+              210 -
+              margin * 2
+            ) /
               converted.width,
 
-            (297 - margin * 2) /
+            (
+              297 -
+              margin * 2
+            ) /
               converted.height
+
           );
 
 
         const width =
           converted.width *
           ratio;
+
 
         const height =
           converted.height *
@@ -2082,11 +2718,14 @@ convertBtn.addEventListener(
               orientation:
                 orientation,
 
-              unit: "mm",
+              unit:
+                "mm",
 
-              format: "a4",
+              format:
+                "a4",
 
-              compress: true
+              compress:
+                true
 
             });
 
@@ -2103,6 +2742,7 @@ convertBtn.addEventListener(
         const pageWidth =
           pdf.internal.pageSize.getWidth();
 
+
         const pageHeight =
           pdf.internal.pageSize.getHeight();
 
@@ -2111,6 +2751,7 @@ convertBtn.addEventListener(
           pageWidth -
           margin * 2;
 
+
         const maxHeight =
           pageHeight -
           margin * 2;
@@ -2118,11 +2759,13 @@ convertBtn.addEventListener(
 
         const finalRatio =
           Math.min(
+
             maxWidth /
               converted.width,
 
             maxHeight /
               converted.height
+
           );
 
 
@@ -2130,20 +2773,24 @@ convertBtn.addEventListener(
           converted.width *
           finalRatio;
 
+
         const finalHeight =
           converted.height *
           finalRatio;
 
 
         const x =
-          (pageWidth -
-            finalWidth) /
-          2;
+          (
+            pageWidth -
+            finalWidth
+          ) / 2;
+
 
         const y =
-          (pageHeight -
-            finalHeight) /
-          2;
+          (
+            pageHeight -
+            finalHeight
+          ) / 2;
 
 
         pdf.addImage(
@@ -2169,16 +2816,12 @@ convertBtn.addEventListener(
 
         progress.style.width =
           Math.round(
-            ((i + 1) /
-              images.length) *
-              100
+            (
+              (i + 1) /
+              images.length
+            ) * 100
           ) + "%";
 
-
-        /*
-          Permite o navegador
-          atualizar a interface.
-        */
 
         await new Promise(
           resolve =>
@@ -2211,11 +2854,14 @@ convertBtn.addEventListener(
         t.done;
 
 
-    } catch (error) {
+    } catch (
+      error
+    ) {
 
       console.error(
         error
       );
+
 
       status.textContent =
         t.error;
@@ -2225,8 +2871,10 @@ convertBtn.addEventListener(
       convertBtn.disabled =
         false;
 
+
       clearBtn.disabled =
         false;
+
 
       addMore.disabled =
         false;
@@ -2237,13 +2885,14 @@ convertBtn.addEventListener(
 );
 
 
-/* =========================================================
-   INICIALIZA
-========================================================= */
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
 
 render();
 
 </script>
+
 
 </body>
 </html>
