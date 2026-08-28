@@ -9,7 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 /* =========================================================
    HYDRAQUEST — design tokens
@@ -508,7 +508,10 @@ function loadState(){
     });
   }catch(e){ console.error('Erro ao carregar dados', e); return defaultState(); }
 }
-function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function saveState(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e){ console.error('Erro ao salvar dados', e); }
+}
 
 /* ---------------------------- HELPERS ---------------------------- */
 const $ = (sel,root=document)=>root.querySelector(sel);
@@ -689,7 +692,7 @@ function seededPick(dateStr, pool, n){
   }
   return picked;
 }
-function ensureMissions(){
+function ensureMissions(showReward=true){
   const today = todayStr();
   if(state.missions.date !== today){
     const picks = seededPick(today, MISSION_POOL, 4);
@@ -701,52 +704,56 @@ function ensureMissions(){
     if(def && !m.done && def.check(day)){
       m.done = true;
       const bonus = getClass(state.user.classId).id==='mago' ? Math.round(def.xp*1.1) : def.xp;
-      addXp(bonus);
-      toast(`Missão concluída: ${def.label} (+${bonus} XP)`, def.ic);
-      playSound('xp');
+      addXp(bonus, showReward);
+      if(showReward){
+        toast(`Missão concluída: ${def.label} (+${bonus} XP)`, def.ic);
+        playSound('xp');
+      }
     }
   });
 }
 
 /* ---------------------------- CONQUISTAS ---------------------------- */
-function unlockAchievement(id){
+function unlockAchievement(id, showReward=true){
   if(state.achievements[id]) return;
   const def = ACHIEVEMENTS.find(a=>a.id===id);
   if(!def) return;
   state.achievements[id] = { date: new Date().toISOString() };
-  playSound('achievement');
-  confetti(24);
-  setTimeout(()=>openModal(achievementModal(def)), 300);
+  if(showReward){
+    playSound('achievement');
+    confetti(24);
+    setTimeout(()=>openModal(achievementModal(def)), 300);
+  }
   if(CERT_MILESTONES.includes(id)){
     state.certificates.push({ id:uid(), achId:id, date:new Date().toISOString(), code:'HQ-'+uid().toUpperCase() });
   }
 }
-function checkAchievements(){
+function checkAchievements(showReward=true){
   const logs = state.logs;
   const waterLogs = logs.filter(l=>l.type==='water');
-  if(waterLogs.length>=1) unlockAchievement('first_drop');
-  if(logs.length>=5) unlockAchievement('journal5');
-  if(waterLogs.length>=50) unlockAchievement('water_master');
-  if(state.progress.streak>=3) unlockAchievement('streak_3');
-  if(state.progress.streak>=7) unlockAchievement('streak_7');
-  if(state.progress.streak>=30) unlockAchievement('streak_30');
-  if(state.progress.streak>=100) unlockAchievement('streak_100');
-  if(state.progress.regionsSeen.length>=3) unlockAchievement('explorer');
-  if(state.progress.monstersDefeated>=10) unlockAchievement('slayer10');
-  if(state.progress.monstersDefeated>=50) unlockAchievement('slayer50');
-  if(state.progress.level>=10) unlockAchievement('level10');
-  if(state.progress.level>=20) unlockAchievement('level20');
-  if(state.progress.level>=35) unlockAchievement('level35');
-  if(totalWaterMl()>=100000) unlockAchievement('liters100');
+  if(waterLogs.length>=1) unlockAchievement('first_drop', showReward);
+  if(logs.length>=5) unlockAchievement('journal5', showReward);
+  if(waterLogs.length>=50) unlockAchievement('water_master', showReward);
+  if(state.progress.streak>=3) unlockAchievement('streak_3', showReward);
+  if(state.progress.streak>=7) unlockAchievement('streak_7', showReward);
+  if(state.progress.streak>=30) unlockAchievement('streak_30', showReward);
+  if(state.progress.streak>=100) unlockAchievement('streak_100', showReward);
+  if(state.progress.regionsSeen.length>=3) unlockAchievement('explorer', showReward);
+  if(state.progress.monstersDefeated>=10) unlockAchievement('slayer10', showReward);
+  if(state.progress.monstersDefeated>=50) unlockAchievement('slayer50', showReward);
+  if(state.progress.level>=10) unlockAchievement('level10', showReward);
+  if(state.progress.level>=20) unlockAchievement('level20', showReward);
+  if(state.progress.level>=35) unlockAchievement('level35', showReward);
+  if(totalWaterMl()>=100000) unlockAchievement('liters100', showReward);
   const cats = new Set(logs.map(l=>l.cat).filter(Boolean));
-  if(cats.size>=6) unlockAchievement('variety');
+  if(cats.size>=6) unlockAchievement('variety', showReward);
   const day = todaysLogs();
   const dayCats = new Set(day.map(l=>l.cat));
-  if(dayCats.has('fruit') && dayCats.has('veg') && dayCats.has('protein')) unlockAchievement('colorful');
+  if(dayCats.has('fruit') && dayCats.has('veg') && dayCats.has('protein')) unlockAchievement('colorful', showReward);
   const hasNight = logs.some(l=>{ const h=new Date(l.ts).getHours(); return h===0; });
-  if(hasNight) unlockAchievement('night_owl');
+  if(hasNight) unlockAchievement('night_owl', showReward);
   const hasEarly = logs.some(l=>{ const h=new Date(l.ts).getHours(); return h<6; });
-  if(hasEarly) unlockAchievement('early_bird');
+  if(hasEarly) unlockAchievement('early_bird', showReward);
 }
 
 /* ---------------------------- REGISTRAR HÁBITO ---------------------------- */
@@ -820,16 +827,35 @@ function editLog(id, newAmount){
    ========================================================================================= */
 function startSplashFlow(){
   const splash = $('#splash');
+  if(!splash) return;
+  let timer = null;
+
   const proceed = ()=>{
+    if(splashProceedStarted) return;
+    splashProceedStarted = true;
+    if(timer) clearTimeout(timer);
+    splash.removeEventListener('click', proceed);
+
     splash.style.transition='opacity .4s ease';
     splash.style.opacity='0';
+    splash.style.pointerEvents='none';
+
     setTimeout(()=>{
       splash.style.display='none';
-      if(state.onboarded){ boot(); } else { startOnboarding(); }
+      try{
+        if(state.onboarded){ boot(); } else { startOnboarding(); }
+      }catch(e){
+        console.error('Erro no fluxo inicial:', e);
+        splashProceedStarted=false;
+        splash.style.display='flex';
+        splash.style.opacity='1';
+        splash.style.pointerEvents='auto';
+      }
     }, 380);
   };
+
   splash.addEventListener('click', proceed, {once:true});
-  setTimeout(proceed, 2600);
+  timer = setTimeout(proceed, 2600);
 }
 
 const OB_STEPS = ['welcome','identity','class','schedule','goal'];
@@ -987,16 +1013,36 @@ const NAV_ITEMS = [
   {id:'reports', label:'Relatórios', ic:'📊'},
   {id:'profile', label:'Perfil', ic:'👤'},
 ];
+let appBooted = false;
+let splashProceedStarted = false;
+
 function boot(){
-  applyTheme();
-  ensureMonster();
-  ensureMissions();
-  checkAchievements();
-  saveState();
-  document.getElementById('app').classList.add('active');
-  renderNav();
-  render();
-  maybeSetupReminders();
+  if(appBooted) return;
+  appBooted = true;
+
+  try{
+    applyTheme();
+    ensureMonster();
+    // A inicialização não deve abrir modais, tocar sons ou criar animações.
+    ensureMissions(false);
+    checkAchievements(false);
+    saveState();
+
+    document.getElementById('app').classList.add('active');
+    renderNav();
+    render();
+    maybeSetupReminders();
+  }catch(e){
+    console.error('Erro ao iniciar o HydraQuest:', e);
+    appBooted = false;
+    const splash = document.getElementById('splash');
+    if(splash){
+      splash.style.display='flex';
+      splash.style.opacity='1';
+      splash.style.pointerEvents='auto';
+    }
+    toast('Não foi possível iniciar. Tente novamente.', '⚠️');
+  }
 }
 function renderNav(){
   $('#bottom-nav').innerHTML = NAV_ITEMS.map(n=>`
@@ -1121,7 +1167,10 @@ function renderDashboard(){
 function afterRenderDashboard(){
   $('#btn-log-water')?.addEventListener('click', ()=>openModal(waterModal()));
   $('#btn-log-food')?.addEventListener('click', ()=>openModal(foodModal()));
-  document.addEventListener('monster-hit', onMonsterHitFx);
+  if(!afterRenderDashboard._listenerAdded){
+    document.addEventListener('monster-hit', onMonsterHitFx);
+    afterRenderDashboard._listenerAdded=true;
+  }
 }
 function onMonsterHitFx(){
   const el = $('#monster-emoji');
